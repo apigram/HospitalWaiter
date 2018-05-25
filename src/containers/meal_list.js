@@ -4,20 +4,20 @@ import { selectMeal, fetchMeals } from '../actions/index';
 import { bindActionCreators } from 'redux';
 
 class MealList extends Component {
-  constructor(props) {
-    super(props);
-    this.props.fetchMeals()
+  componentDidMount() {
+    this.props.fetchMeals();
   }
   renderList() {
-    this.props.meals.map((meal) => {
+    return this.props.meals.map((meal) => {
       return (
-        <li className="list-group-item" onClick={() => this.props.selectMeal(meal.id)}>{meal.label}</li>
+        <li key={meal.uri} className="list-group-item meal sm-4" onClick={() => this.props.selectMeal(meal.id)}>{meal.label} - {meal.current_quantity} remaining</li>
       )
     });
   }
+
   render() {
     return (
-      <ul className="list-group">
+      <ul className="list-group meal-list">
         {this.renderList()}
       </ul>
     )

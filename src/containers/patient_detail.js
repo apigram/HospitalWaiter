@@ -19,6 +19,7 @@ class PatientDetail extends Component {
     else {
       return (
         <div className="patient">
+          <p>Please Log In</p>
         </div>
       )
     }
