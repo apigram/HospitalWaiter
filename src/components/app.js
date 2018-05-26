@@ -7,9 +7,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Hospital Waiter</h1>
-        <PatientDetail/>
-        <MealList/>
+          <h1>Hospital Waiter</h1>
+          <PatientDetail/>
+          <MealList/>
       </div>
     );
   }

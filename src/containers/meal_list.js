@@ -10,24 +10,27 @@ class MealList extends Component {
   renderList() {
     return this.props.meals.map((meal) => {
       return (
-        <li key={meal.uri} className="list-group-item meal sm-4" onClick={() => this.props.selectMeal(meal.id)}>{meal.label} - {meal.current_quantity} remaining</li>
+        <li key={meal.uri} className="list-group-item meal sm-4" onClick={() => this.props.selectMeal(meal.uri)}>{meal.label} - {meal.current_quantity} remaining</li>
       )
     });
   }
 
   render() {
     return (
-      <ul className="list-group meal-list">
-        {this.renderList()}
-      </ul>
-    )
+        <section className="meal-list">
+            <h2>Today's Meals</h2>
+            <ul className="list-group meal-list">
+                {this.renderList()}
+            </ul>
+        </section>
+    );
   }
 }
 
 function mapStateToProps(state) {
   return {
     meals: state.meals
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {

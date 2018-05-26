@@ -4,7 +4,7 @@ import ActivePatientReducer from './reducer_active_patient';
 import MealsReducer from './reducer_meals';
 
 const rootReducer = combineReducers({
-  requirements: RequirementsReducer,
+  patientRequirements: RequirementsReducer,
   activePatient: ActivePatientReducer,
   meals: MealsReducer
 });
