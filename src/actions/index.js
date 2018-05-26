@@ -8,6 +8,7 @@ export const FETCH_PATIENT = 'FETCH_PATIENT';
 export const SELECT_MEAL = 'SELECT_MEAL';
 export const FETCH_REQUIREMENTS = 'FETCH_REQUIREMENTS';
 export const FETCH_PATIENT_REQUIREMENTS = 'FETCH_PATIENT_REQUIREMENTS';
+export const FETCH_PATIENT_MEALS = 'FETCH_PATIENT_MEALS';
 
 export function fetchMeals() {
     const url = `${MEAL_SERVICE_URL}/mealservice/meal`;
@@ -42,9 +43,8 @@ export function fetchPatient(patient) {
     }
 }
 
-export function fetchPatientRequirements(patient) {
-    console.log('Fetching patient requirements');
-    const url = `${MEAL_SERVICE_URL}${patient}`;
+export function fetchPatientRequirements(patient_req_uri) {
+    const url = `${MEAL_SERVICE_URL}${patient_req_uri}`;
 
     const request = axios.get(url);
 
@@ -54,10 +54,24 @@ export function fetchPatientRequirements(patient) {
     }
 }
 
-export function selectMeal(meal) {
-    const url = `${MEAL_SERVICE_URL}${meal}`;
+export function fetchPatientMeals(patient_meal_uri) {
+    const url = `${MEAL_SERVICE_URL}${patient_meal_uri}`;
 
     const request = axios.get(url);
+
+    return {
+        type: FETCH_PATIENT_MEALS,
+        payload: request
+    }
+}
+
+export function selectMeal(order_meal_uri, id) {
+    const url = `${MEAL_SERVICE_URL}${order_meal_uri}`;
+
+    const request = axios.post(url,{
+        meal_id: id,
+        quantity: 1,
+    });
 
     return {
         type: SELECT_MEAL,
