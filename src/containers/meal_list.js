@@ -1,23 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {selectMeal, fetchMeals, MEAL_SERVICE_URL} from '../actions/index';
+import {selectMeal, fetchMeals} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import MealRequirementList from './meal_requirement_list';
-import axios from 'axios';
+
 
 class MealList extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {promise: null}
     }
     componentDidMount() {
         this.props.fetchMeals();
-    }
-
-    getRequirements(meal) {
-        const url = `${MEAL_SERVICE_URL}${meal.requirements}`;
-        return axios.get(url);
     }
 
     renderList() {
@@ -34,7 +27,7 @@ class MealList extends Component {
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            <MealRequirementList promise={this.getRequirements(meal)}/>
+                            <MealRequirementList requirements={meal.requirements}/>
                         </div>
                     </div>
                 </li>

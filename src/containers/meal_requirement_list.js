@@ -1,46 +1,52 @@
-import React from 'react'
+import React, {Component} from 'react'
+import axios from 'axios';
+import {MEAL_SERVICE_URL} from "../actions";
 
-const listClasses = "list-group-item requirement";
+const listClasses = "badge requirement";
 
-function renderList(requirements) {
-    return requirements.map((req) => {
-        let typeClass = '';
-        let scaleStr = '';
-        switch (req.type) {
-            case 'ALLERGEN':
-                typeClass = ' list-group-item-danger';
-                break;
-            case 'DIETARY_POSITIVE':
-                typeClass = ' list-group-item-success';
-                break;
-            case 'DIETARY_NEGATIVE':
-                typeClass = ' list-group-item-warning';
-                break;
-            default:
-                typeClass = '';
-        }
-        if (req.scale !== null) {
-            scaleStr = ' (' + req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase() + ')'
-        }
+export default class MealRequirementList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {requirements: []};
+        const url = `${MEAL_SERVICE_URL}${props.requirements}`;
+        axios.get(url)
+            .then((response) => {
+                this.setState({requirements: response.data.requirements})
+            });
+    }
+
+    renderList() {
+        return this.state.requirements.map((req) => {
+            let typeClass = '';
+            let scaleStr = '';
+            switch (req.type) {
+                case 'ALLERGEN':
+                    typeClass = ' badge-danger';
+                    break;
+                case 'DIETARY_POSITIVE':
+                    typeClass = ' badge-success';
+                    break;
+                case 'DIETARY_NEGATIVE':
+                    typeClass = ' badge-warning';
+                    break;
+                default:
+                    typeClass = '';
+            }
+            if (req.scale !== null) {
+                scaleStr = ' (' + req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase() + ')'
+            }
+            return (
+                <div key={req.uri}
+                    className={listClasses + typeClass}>{req.label}{scaleStr}</div>
+            );
+        })
+    }
+
+    render() {
         return (
-            <li key={req.uri}
-                className={listClasses + typeClass}>{req.label}{scaleStr}</li>
-        );
-    })
-}
-
-export default function render(props) {
-    props.promise.then((response) => {
-        return (
-            <div className="card bg-light text-dark">
-                <h3 className="card-header">Dietary Warnings</h3>
-                <ul className="list-group list-group-flush requirement-list">
-                    {renderList(response.data.requirements)}
-                </ul>
+            <div className="row">
+                    {this.renderList()}
             </div>
         );
-    });
-    return (
-        <div className="card bg-light text-dark">None</div>
-    );
+    }
 }

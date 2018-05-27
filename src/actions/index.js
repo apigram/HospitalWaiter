@@ -3,11 +3,9 @@ import axios from 'axios';
 export const MEAL_SERVICE_URL = 'http://localhost:5000';
 
 export const FETCH_MEALS = 'FETCH_MEALS';
-export const FETCH_MEAL_REQUIREMENTS = 'FETCH_MEAL_REQUIREMENTS';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
 export const SELECT_MEAL = 'SELECT_MEAL';
 export const DELETE_MEAL = 'DELETE_MEAL';
-export const FETCH_REQUIREMENTS = 'FETCH_REQUIREMENTS';
 export const FETCH_PATIENT_REQUIREMENTS = 'FETCH_PATIENT_REQUIREMENTS';
 export const FETCH_PATIENT_MEALS = 'FETCH_PATIENT_MEALS';
 
