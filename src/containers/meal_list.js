@@ -1,19 +1,44 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {selectMeal, fetchMeals} from '../actions/index';
+import {selectMeal, fetchMeals, MEAL_SERVICE_URL} from '../actions/index';
 import {bindActionCreators} from 'redux';
+import MealRequirementList from './meal_requirement_list';
+import axios from 'axios';
 
 class MealList extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {promise: null}
+    }
     componentDidMount() {
         this.props.fetchMeals();
+    }
+
+    getRequirements(meal) {
+        const url = `${MEAL_SERVICE_URL}${meal.requirements}`;
+        return axios.get(url);
     }
 
     renderList() {
         return this.props.meals.map((meal) => {
             return (
-                <li key={meal.uri} className="list-group-item meal"
-                    onClick={() => this.props.selectMeal(meal.patient_meal, meal.id)}>{meal.label} - {meal.current_quantity} remaining</li>
-            )
+                <li key={meal.uri} className="list-group-item meal">
+                    <div className="row">
+                        <div className="col-sm-11">
+                            {meal.label} - {meal.current_quantity} remaining
+                        </div>
+                        <div className="col-sm-1">
+                            <button type="button" className="btn btn-success" onClick={() => this.props.selectMeal(this.props.activePatient.meals, meal.id)}>+</button>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <MealRequirementList promise={this.getRequirements(meal)}/>
+                        </div>
+                    </div>
+                </li>
+            );
         });
     }
 

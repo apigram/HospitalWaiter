@@ -1,14 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {fetchPatientMeals} from "../actions";
+import {fetchPatientMeals, deleteMeal} from "../actions";
 import {bindActionCreators} from 'redux';
 
 class PatientMealList extends Component {
+    constructor(props) {
+        super(props);
+        this.props.fetchPatientMeals(this.props.activePatient.meals)
+    }
     renderList() {
         return this.props.patientMeals.map((meal) => {
             return (
                 <li key={meal.uri}
-                    className="list-group-item">{meal.label}</li>
+                    className="list-group-item">
+                    <div className="row">
+                        <div className="col-sm-10">
+                            {meal.label} ({meal.quantity})
+                        </div>
+                        <div className="col-sm-2">
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.props.deleteMeal(meal.patient_meal)}>-</button>
+                        </div>
+                    </div>
+                </li>
             );
         })
     }
@@ -17,9 +30,7 @@ class PatientMealList extends Component {
         if (this.props.patientMeals.length > 0) {
             return (
                 <div className="card bg-light text-dark">
-                    <h3 className="card-header"
-                        onClick={() => this.props.fetchPatientMeals(this.props.activePatient.meals)}>Selected Meals
-                    </h3>
+                    <h3 className="card-header">Selected Meals</h3>
                     <ul className="list-group list-group-flush requirement-list">
                         {this.renderList()}
                     </ul>
@@ -29,11 +40,7 @@ class PatientMealList extends Component {
             return (
                 <div className="card bg-light text-dark">
                     <h3 className="card-header">Selected Meals</h3>
-                    <div className="card-body">
-                        <button onClick={() => this.props.fetchPatientMeals(this.props.activePatient.meals)}>
-                            Show Meals
-                        </button>
-                    </div>
+                    <div className="card-body">None</div>
                 </div>
             );
         }
@@ -48,7 +55,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchPatientMeals}, dispatch);
+    return bindActionCreators({fetchPatientMeals, deleteMeal}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PatientMealList);

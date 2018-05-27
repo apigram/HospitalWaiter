@@ -6,6 +6,11 @@ import {bindActionCreators} from 'redux';
 const listClasses = "list-group-item requirement";
 
 class PatientRequirementList extends Component {
+    constructor(props) {
+        super(props);
+        this.props.fetchPatientRequirements(this.props.activePatient.requirements);
+
+    }
     renderList() {
         return this.props.patientRequirements.map((req) => {
             let typeClass = '';
@@ -24,7 +29,13 @@ class PatientRequirementList extends Component {
             }
             return (
                 <li key={req.uri}
-                    className={listClasses + typeClass}>{req.label} ({req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase()})</li>
+                    className={listClasses + typeClass}>
+                    <div className="row">
+                        <div className="col-sm-12">
+                            {req.label} ({req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase()})
+                        </div>
+                    </div>
+                </li>
             );
         })
     }
@@ -44,10 +55,7 @@ class PatientRequirementList extends Component {
                 <div className="card bg-light text-dark">
                     <h3 className="card-header">Dietary Requirements</h3>
                     <div className="card-body">
-                        <button
-                            onClick={() => this.props.fetchPatientRequirements(this.props.activePatient.requirements)}>
-                            Show Dietary Requirements
-                        </button>
+                        Loading...
                     </div>
                 </div>
             );

@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
     patientRequirements: RequirementsReducer,
     activePatient: ActivePatientReducer,
     meals: MealsReducer,
-    patientMeals: PatientMealsReducer
+    patientMeals: PatientMealsReducer,
 });
 
 export default rootReducer;

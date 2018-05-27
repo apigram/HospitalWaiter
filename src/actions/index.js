@@ -1,28 +1,18 @@
 import axios from 'axios';
 
-const MEAL_SERVICE_URL = 'http://localhost:5000';
+export const MEAL_SERVICE_URL = 'http://localhost:5000';
 
 export const FETCH_MEALS = 'FETCH_MEALS';
-export const FETCH_MEAL = 'FETCH_MEAL';
+export const FETCH_MEAL_REQUIREMENTS = 'FETCH_MEAL_REQUIREMENTS';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
 export const SELECT_MEAL = 'SELECT_MEAL';
+export const DELETE_MEAL = 'DELETE_MEAL';
 export const FETCH_REQUIREMENTS = 'FETCH_REQUIREMENTS';
 export const FETCH_PATIENT_REQUIREMENTS = 'FETCH_PATIENT_REQUIREMENTS';
 export const FETCH_PATIENT_MEALS = 'FETCH_PATIENT_MEALS';
 
 export function fetchMeals() {
     const url = `${MEAL_SERVICE_URL}/mealservice/meal`;
-
-    const request = axios.get(url);
-
-    return {
-        type: FETCH_MEALS,
-        payload: request
-    }
-}
-
-export function fetchMeal(meal) {
-    const url = `${MEAL_SERVICE_URL}${meal}`;
 
     const request = axios.get(url);
 
@@ -75,6 +65,17 @@ export function selectMeal(order_meal_uri, id) {
 
     return {
         type: SELECT_MEAL,
+        payload: request
+    }
+}
+
+export function deleteMeal(delete_meal_uri) {
+    const url = `${MEAL_SERVICE_URL}${delete_meal_uri}`;
+
+    const request = axios.delete(url);
+
+    return {
+        type: DELETE_MEAL,
         payload: request
     }
 }
