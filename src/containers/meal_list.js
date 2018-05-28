@@ -8,8 +8,6 @@ import MealRequirementList from './meal_requirement_list';
 class MealList extends Component {
     constructor(props) {
         super(props);
-    }
-    componentDidMount() {
         this.props.fetchMeals();
     }
 
@@ -18,16 +16,20 @@ class MealList extends Component {
             return (
                 <li key={meal.uri} className="list-group-item meal">
                     <div className="row">
-                        <div className="col-sm-11">
-                            {meal.label} - {meal.current_quantity} remaining
+                        <div className="col-sm-10">
+                            <div className="row">
+                                <div className="col-sm-12 text-left">
+                                    {meal.label} - {meal.current_quantity} remaining
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <MealRequirementList requirements={meal.requirements}/>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-sm-1">
-                            <button type="button" className="btn btn-success" onClick={() => this.props.selectMeal(this.props.activePatient.meals, meal.id)}>+</button>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <MealRequirementList requirements={meal.requirements}/>
+                        <div className="col-sm-2">
+                            <button type="button" className="btn btn-success" onClick={() => this.props.selectMeal(this.props.activePatient.meals, meal.id)}>Order Meal</button>
                         </div>
                     </div>
                 </li>

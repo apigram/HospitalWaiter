@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import {MEAL_SERVICE_URL} from "../actions";
+import {MEAL_SERVICE_URL, AUTH_HEADER} from "../actions";
 
 const listClasses = "badge requirement";
 
@@ -9,7 +9,7 @@ export default class MealRequirementList extends Component {
         super(props);
         this.state = {requirements: []};
         const url = `${MEAL_SERVICE_URL}${props.requirements}`;
-        axios.get(url)
+        axios.get(url, AUTH_HEADER)
             .then((response) => {
                 this.setState({requirements: response.data.requirements})
             });

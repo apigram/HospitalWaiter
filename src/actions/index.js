@@ -10,10 +10,16 @@ export const FETCH_PATIENT_REQUIREMENTS = 'FETCH_PATIENT_REQUIREMENTS';
 export const FETCH_PATIENT_MEALS = 'FETCH_PATIENT_MEALS';
 export const LOGIN = 'LOGIN';
 
+export let AUTH_HEADER = {
+    auth: {
+        username: null
+    }
+};
+
 export function fetchMeals() {
     const url = `${MEAL_SERVICE_URL}/mealservice/meal`;
 
-    const request = axios.get(url);
+    const request = axios.get(url, AUTH_HEADER);
 
     return {
         type: FETCH_MEALS,
@@ -24,7 +30,7 @@ export function fetchMeals() {
 export function fetchPatient(patient) {
     const url = `${MEAL_SERVICE_URL}/mealservice/patient/${patient}`;
 
-    const request = axios.get(url);
+    const request = axios.get(url, AUTH_HEADER);
 
     return {
         type: FETCH_PATIENT,
@@ -35,7 +41,7 @@ export function fetchPatient(patient) {
 export function fetchPatientRequirements(patient_req_uri) {
     const url = `${MEAL_SERVICE_URL}${patient_req_uri}`;
 
-    const request = axios.get(url);
+    const request = axios.get(url, AUTH_HEADER);
 
     return {
         type: FETCH_PATIENT_REQUIREMENTS,
@@ -46,7 +52,7 @@ export function fetchPatientRequirements(patient_req_uri) {
 export function fetchPatientMeals(patient_meal_uri) {
     const url = `${MEAL_SERVICE_URL}${patient_meal_uri}`;
 
-    const request = axios.get(url);
+    const request = axios.get(url, AUTH_HEADER);
 
     return {
         type: FETCH_PATIENT_MEALS,
@@ -60,7 +66,7 @@ export function selectMeal(order_meal_uri, id) {
     const request = axios.post(url, {
         meal_id: id,
         quantity: 1,
-    });
+    }, AUTH_HEADER);
 
     return {
         type: SELECT_MEAL,
@@ -71,7 +77,7 @@ export function selectMeal(order_meal_uri, id) {
 export function deleteMeal(delete_meal_uri) {
     const url = `${MEAL_SERVICE_URL}${delete_meal_uri}`;
 
-    const request = axios.delete(url);
+    const request = axios.delete(url, AUTH_HEADER);
 
     return {
         type: DELETE_MEAL,
@@ -85,7 +91,7 @@ export function login(user, password) {
     const request = axios.get(url, {
             auth: {
                 username: user,
-                password
+                password,
             }
         }
     );

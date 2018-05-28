@@ -37,6 +37,7 @@ class LoginForm extends Component {
                     <input type="text" name="username" onChange={this.handleChange} value={this.state.username} className="form-control"/>
                     <label htmlFor="password">Password:</label>
                     <input type="password" name="password" onChange={this.handleChange} value={this.state.password} className="form-control"/>
+                    <br/>
                     <button type="submit" className="btn btn-primary">Log In</button>
                 </div>
 

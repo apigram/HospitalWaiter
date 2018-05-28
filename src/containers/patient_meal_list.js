@@ -14,11 +14,11 @@ class PatientMealList extends Component {
                 <li key={meal.uri}
                     className="list-group-item">
                     <div className="row">
-                        <div className="col-sm-10">
+                        <div className="col-sm-9 text-left">
                             {meal.label} ({meal.quantity})
                         </div>
-                        <div className="col-sm-2">
-                            <button type="button" className="btn btn-danger btn-sm" onClick={() => this.props.deleteMeal(meal.patient_meal)}>-</button>
+                        <div className="col-sm-3">
+                            <button type="button" className="close" onClick={() => this.props.deleteMeal(meal.patient_meal)}>&times;</button>
                         </div>
                     </div>
                 </li>
