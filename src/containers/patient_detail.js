@@ -7,7 +7,7 @@ import PatientMealList from './patient_meal_list';
 
 class PatientDetail extends Component {
     componentDidMount() {
-        this.props.fetchPatient(1);
+        this.props.fetchPatient(this.props.activeUser.patient_id);
     }
 
     render() {
@@ -45,6 +45,7 @@ class PatientDetail extends Component {
 
 function mapStateToProps(state) {
     return {
+        activeUser: state.activeUser,
         activePatient: state.activePatient
     };
 }

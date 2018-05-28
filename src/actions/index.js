@@ -8,6 +8,7 @@ export const SELECT_MEAL = 'SELECT_MEAL';
 export const DELETE_MEAL = 'DELETE_MEAL';
 export const FETCH_PATIENT_REQUIREMENTS = 'FETCH_PATIENT_REQUIREMENTS';
 export const FETCH_PATIENT_MEALS = 'FETCH_PATIENT_MEALS';
+export const LOGIN = 'LOGIN';
 
 export function fetchMeals() {
     const url = `${MEAL_SERVICE_URL}/mealservice/meal`;
@@ -56,7 +57,7 @@ export function fetchPatientMeals(patient_meal_uri) {
 export function selectMeal(order_meal_uri, id) {
     const url = `${MEAL_SERVICE_URL}${order_meal_uri}`;
 
-    const request = axios.post(url,{
+    const request = axios.post(url, {
         meal_id: id,
         quantity: 1,
     });
@@ -76,4 +77,22 @@ export function deleteMeal(delete_meal_uri) {
         type: DELETE_MEAL,
         payload: request
     }
+}
+
+export function login(user, password) {
+    const url = `${MEAL_SERVICE_URL}/auth/token`;
+
+    const request = axios.get(url, {
+            auth: {
+                username: user,
+                password
+            }
+        }
+    );
+
+    return {
+        type: LOGIN,
+        payload: request
+    }
+
 }

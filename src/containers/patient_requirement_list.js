@@ -55,7 +55,7 @@ class PatientRequirementList extends Component {
                 <div className="card bg-light text-dark">
                     <h3 className="card-header">Dietary Requirements</h3>
                     <div className="card-body">
-                        Loading...
+                        None
                     </div>
                 </div>
             );
