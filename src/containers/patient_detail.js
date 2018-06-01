@@ -6,7 +6,8 @@ import PatientRequirementList from './patient_requirement_list'
 import PatientMealList from './patient_meal_list';
 
 class PatientDetail extends Component {
-    componentDidMount() {
+    constructor(props) {
+        super(props);
         this.props.fetchPatient(this.props.activeUser.patient_id);
     }
 
