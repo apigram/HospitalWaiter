@@ -86,7 +86,7 @@ export function deleteMeal(delete_meal_uri) {
 }
 
 export function login(user, password) {
-    const url = `${MEAL_SERVICE_URL}/auth/token`;
+    const url = `${MEAL_SERVICE_URL}/mealservice/auth/token`;
 
     const request = axios.get(url, {
             auth: {
