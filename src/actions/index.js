@@ -11,8 +11,8 @@ export const FETCH_PATIENT_MEALS = 'FETCH_PATIENT_MEALS';
 export const LOGIN = 'LOGIN';
 
 export let AUTH_HEADER = {
-    auth: {
-        username: null
+    headers: {
+        Authorization: null
     }
 };
 
@@ -86,7 +86,7 @@ export function deleteMeal(delete_meal_uri) {
 }
 
 export function login(user, password) {
-    const url = `${MEAL_SERVICE_URL}/mealservice/auth/token`;
+    const url = `${MEAL_SERVICE_URL}/authservice/token`;
 
     const request = axios.get(url, {
             auth: {
