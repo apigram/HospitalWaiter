@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const MEAL_SERVICE_URL = 'http://localhost:5000';
+export const MEAL_SERVICE_URL = 'http://localhost:5001';
+export const AUTH_SERVICE_URL = 'http://localhost:5000';
 
 export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
@@ -12,7 +13,7 @@ export const LOGIN = 'LOGIN';
 
 export let AUTH_HEADER = {
     headers: {
-        Authorization: null
+        Authorization: ''
     }
 };
 
@@ -86,7 +87,7 @@ export function deleteMeal(delete_meal_uri) {
 }
 
 export function login(user, password) {
-    const url = `${MEAL_SERVICE_URL}/authservice/token`;
+    const url = `${AUTH_SERVICE_URL}/authservice/token`;
 
     const request = axios.get(url, {
             auth: {
