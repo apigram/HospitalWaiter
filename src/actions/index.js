@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const MEAL_SERVICE_URL = 'http://localhost:5001';
-export const AUTH_SERVICE_URL = 'http://localhost:5000';
+export const MEAL_SERVICE_URL = 'http://localhost:8000';
+export const AUTH_SERVICE_URL = 'http://localhost:8000';
 
 export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_PATIENT = 'FETCH_PATIENT';
@@ -28,10 +28,9 @@ export function fetchMeals() {
     }
 }
 
-export function fetchPatient(patient) {
-    const url = `${MEAL_SERVICE_URL}/mealservice/patient/${patient}`;
+export function fetchPatient(patient_url) {
 
-    const request = axios.get(url, AUTH_HEADER);
+    const request = axios.get(patient_url, AUTH_HEADER);
 
     return {
         type: FETCH_PATIENT,
@@ -40,9 +39,7 @@ export function fetchPatient(patient) {
 }
 
 export function fetchPatientRequirements(patient_req_uri) {
-    const url = `${MEAL_SERVICE_URL}${patient_req_uri}`;
-
-    const request = axios.get(url, AUTH_HEADER);
+    const request = axios.get(patient_req_uri, AUTH_HEADER);
 
     return {
         type: FETCH_PATIENT_REQUIREMENTS,
@@ -51,9 +48,7 @@ export function fetchPatientRequirements(patient_req_uri) {
 }
 
 export function fetchPatientMeals(patient_meal_uri) {
-    const url = `${MEAL_SERVICE_URL}${patient_meal_uri}`;
-
-    const request = axios.get(url, AUTH_HEADER);
+    const request = axios.get(patient_meal_uri, AUTH_HEADER);
 
     return {
         type: FETCH_PATIENT_MEALS,
@@ -62,9 +57,7 @@ export function fetchPatientMeals(patient_meal_uri) {
 }
 
 export function selectMeal(order_meal_uri, id) {
-    const url = `${MEAL_SERVICE_URL}${order_meal_uri}`;
-
-    const request = axios.post(url, {
+    const request = axios.post(order_meal_uri, {
         meal_id: id,
         quantity: 1,
     }, AUTH_HEADER);
@@ -76,9 +69,7 @@ export function selectMeal(order_meal_uri, id) {
 }
 
 export function deleteMeal(delete_meal_uri) {
-    const url = `${MEAL_SERVICE_URL}${delete_meal_uri}`;
-
-    const request = axios.delete(url, AUTH_HEADER);
+    const request = axios.delete(delete_meal_uri, AUTH_HEADER);
 
     return {
         type: DELETE_MEAL,
@@ -87,13 +78,11 @@ export function deleteMeal(delete_meal_uri) {
 }
 
 export function login(user, password) {
-    const url = `${AUTH_SERVICE_URL}/authservice/token`;
+    const url = `${AUTH_SERVICE_URL}/mealservice/api-token-auth/login`;
 
-    const request = axios.get(url, {
-            auth: {
-                username: user,
-                password,
-            }
+    const request = axios.post(url, {
+            username: user,
+            password,
         }
     );
 

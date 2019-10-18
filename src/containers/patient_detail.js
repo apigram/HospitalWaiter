@@ -8,7 +8,7 @@ import PatientMealList from './patient_meal_list';
 class PatientDetail extends Component {
     constructor(props) {
         super(props);
-        this.props.fetchPatient(this.props.activeUser.patient_id);
+        this.props.fetchPatient(this.props.activeUser.patient.url);
     }
 
     render() {

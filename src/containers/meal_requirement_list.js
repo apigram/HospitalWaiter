@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios';
-import {MEAL_SERVICE_URL, AUTH_HEADER} from "../actions";
+import {AUTH_HEADER} from "../actions";
 
 const listClasses = "badge requirement";
 
@@ -8,38 +8,47 @@ export default class MealRequirementList extends Component {
     constructor(props) {
         super(props);
         this.state = {requirements: []};
-        const url = `${MEAL_SERVICE_URL}${props.requirements}`;
-        axios.get(url, AUTH_HEADER)
-            .then((response) => {
-                this.setState({requirements: response.data.requirements})
-            });
+        this.props.requirements.map((req) => {
+            axios.get(req.requirement, AUTH_HEADER)
+                .then((response) => {
+                    console.log(response);
+                    let scaleStr = '';
+                    if (req.scale !== null) {
+                        scaleStr = ' (' + req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase() + ')'
+                    }
+                    this.setState({requirements: [...this.state.requirements, {
+                        url: req.url,
+                        type: response.data.type,
+                        label: response.data.label,
+                        scale: scaleStr
+                    }]
+                    });
+            })
+        })
     }
 
     renderList() {
         return this.state.requirements.map((req) => {
             let typeClass = '';
-            let scaleStr = '';
             switch (req.type) {
-                case 'ALLERGEN':
+                case 'Allergen':
                     typeClass = ' badge-danger';
                     break;
-                case 'DIETARY_POSITIVE':
+                case 'Positive':
                     typeClass = ' badge-success';
                     break;
-                case 'DIETARY_NEGATIVE':
+                case 'Negative':
                     typeClass = ' badge-warning';
                     break;
                 default:
                     typeClass = '';
             }
-            if (req.scale !== null) {
-                scaleStr = ' (' + req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase() + ')'
-            }
             return (
-                <div key={req.uri}
-                    className={listClasses + typeClass}>{req.label}{scaleStr}</div>
-            );
-        })
+                <div key={req.url}
+                 className={listClasses + typeClass}>{req.label}{req.scale}
+                </div>
+            )
+        });
     }
 
     render() {

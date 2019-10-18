@@ -1,18 +1,35 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {fetchPatientRequirements} from "../actions";
+import {AUTH_HEADER, fetchPatientRequirements} from "../actions";
 import {bindActionCreators} from 'redux';
+import axios from 'axios';
 
 const listClasses = "list-group-item requirement";
 
 class PatientRequirementList extends Component {
     constructor(props) {
-        super(props);
-        this.props.fetchPatientRequirements(this.props.activePatient.requirements);
-
+        super(props)
+        this.state = {requirements: []}
+        this.props.activePatient.requirements.map((req) => {
+            axios.get(req.requirement, AUTH_HEADER)
+                .then((response) => {
+                    console.log(response);
+                    let scaleStr = '';
+                    if (req.scale !== null) {
+                        scaleStr = ' (' + req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase() + ')'
+                    }
+                    this.setState({requirements: [...this.state.requirements, {
+                            url: req.url,
+                            type: response.data.type,
+                            label: response.data.label,
+                            scale: scaleStr
+                        }]
+                    });
+                })
+        })
     }
     renderList() {
-        return this.props.patientRequirements.map((req) => {
+        return this.state.requirements.map((req) => {
             let typeClass = '';
             switch (req.type) {
                 case 'ALLERGEN':
@@ -28,11 +45,11 @@ class PatientRequirementList extends Component {
                     typeClass = '';
             }
             return (
-                <li key={req.uri}
+                <li key={req.url}
                     className={listClasses + typeClass}>
                     <div className="row">
                         <div className="col-sm-12">
-                            {req.label} ({req.scale.slice(0, 1).toUpperCase() + req.scale.slice(1, req.scale.length).toLowerCase()})
+                            {req.label} {req.scale}
                         </div>
                     </div>
                 </li>
@@ -41,7 +58,7 @@ class PatientRequirementList extends Component {
     }
 
     render() {
-        if (this.props.patientRequirements.length > 0) {
+        if (this.props.activePatient.requirements.length > 0) {
             return (
                 <div className="card bg-light text-dark">
                     <h3 className="card-header">Dietary Requirements</h3>
@@ -66,7 +83,6 @@ class PatientRequirementList extends Component {
 function mapStateToProps(state) {
     return {
         activePatient: state.activePatient,
-        patientRequirements: state.patientRequirements
     }
 }
 

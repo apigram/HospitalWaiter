@@ -14,7 +14,7 @@ class MealList extends Component {
     renderList() {
         return this.props.meals.map((meal) => {
             return (
-                <li key={meal.uri} className="list-group-item meal">
+                <li key={meal.url} className="list-group-item meal">
                     <div className="row">
                         <div className="col-sm-10">
                             <div className="row">
